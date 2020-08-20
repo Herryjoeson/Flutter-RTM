@@ -109,6 +109,13 @@ class AgoraRtmChannel {
           "sendMessage failed errorCode:${res['errorCode']}", res['errorCode']);
   }
 
+  Future<void> sendMessageAndSaveServer(AgoraRtmMessage message) async {
+    final res = await _callNative("sendMessage", {'message': message.text});
+    if (res["errorCode"] != 0)
+      throw AgoraRtmChannelException(
+          "sendMessage failed errorCode:${res['errorCode']}", res['errorCode']);
+  }
+
   Future<void> leave() async {
     final res = await _callNative("leave", null);
     if (res["errorCode"] != 0)

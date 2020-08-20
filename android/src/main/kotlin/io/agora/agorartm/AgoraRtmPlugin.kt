@@ -908,6 +908,26 @@ class AgoraRtmPlugin: MethodCallHandler {
           }
         })
       }
+      "sendMessageAndSaveServer" -> {
+        val message = client.createMessage()
+        message.text = args?.get("message") as String
+        val options = SendMessageOptions()
+        options.enableOfflineMessaging = true
+        rtmChannel.sendMessage(message, options, object : ResultCallback<Void> {
+          override fun onSuccess(resp: Void?) {
+            runMainThread {
+              result.success(hashMapOf(
+                      "errorCode" to 0
+              ))
+            }
+          }
+          override fun onFailure(code: ErrorInfo) {
+            runMainThread {
+              result.success(hashMapOf("errorCode" to code.getErrorCode()))
+            }
+          }
+        })
+      }
       "leave" -> {
         rtmChannel.leave(object : ResultCallback<Void> {
           override fun onSuccess(resp: Void?) {
