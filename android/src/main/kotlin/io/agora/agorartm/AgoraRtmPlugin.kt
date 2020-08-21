@@ -912,7 +912,7 @@ class AgoraRtmPlugin: MethodCallHandler {
         val message = client.createMessage()
         message.text = args?.get("message") as String
         val options = SendMessageOptions()
-        options.enableOfflineMessaging = true
+        options.enableHistoricalMessaging = true
         rtmChannel.sendMessage(message, options, object : ResultCallback<Void> {
           override fun onSuccess(resp: Void?) {
             runMainThread {
