@@ -383,6 +383,16 @@
         result(@{@"errorCode": @(errorCode)});
     }];
   }
+  else if ([@"sendMessageAndSaveServer" isEqualToString:name]) {
+      NSString *text = args[@"message"] != [NSNull null] ? args[@"message"] : nil;
+      AgoraRtmMessage *message = [[AgoraRtmMessage new] initWithText:text];
+      AgoraRtmSendMessageOptions *options = [[AgoraRtmSendMessageOptions new] enableHistoricalMessaging:YES];
+      [channel sendMessage:message
+         sendMessageOption:options
+                completion:^(AgoraRtmSendChannelMessageErrorCode errorCode) {
+          result(@{@"errorCode": @(errorCode)});
+      }];
+  }
   else if ([@"leave" isEqualToString:name]) {
     [channel leaveWithCompletion:^(AgoraRtmLeaveChannelErrorCode errorCode) {
       result(@{@"errorCode": @(errorCode)});
