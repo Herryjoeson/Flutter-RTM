@@ -388,7 +388,7 @@ else if ([@"sendMessageAndSaveServer" isEqualToString:name]) {
   AgoraRtmSendMessageOptions *sendMessageOption = [[AgoraRtmSendMessageOptions alloc] init];
   sendMessageOption.enableHistoricalMessaging = true;
   [channel sendMessage:message
-     sendMessageOption:options
+     sendMessageOptions:options
             completion:^(AgoraRtmSendChannelMessageErrorCode errorCode) {
       result(@{@"errorCode": @(errorCode)});
   }];
