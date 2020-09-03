@@ -119,7 +119,7 @@
     BOOL offline = args[@"offline"] != [NSNull null] ? args[@"offline"] : false;
     AgoraRtmSendMessageOptions *sendMessageOption = [[AgoraRtmSendMessageOptions alloc] init];
     sendMessageOption.enableOfflineMessaging = offline;
-    [rtmClient.kit sendMessage:[[AgoraRtmMessage new] initWithText:text]  toPeer:peerId sendMessageOptions:sendMessageOption completion:^(AgoraRtmSendPeerMessageErrorCode errorCode) {
+    [rtmClient.kit sendMessage:[[AgoraRtmMessage new] initWithText:text]  toPeer:peerId sendMessageOptions:sendMessageOption completion:^(AgoraRtmSendPeerMessageErrorCode errorCode) {join
       result(@{@"errorCode": @(errorCode)});
     }];
   }
@@ -383,16 +383,16 @@
         result(@{@"errorCode": @(errorCode)});
     }];
   }
-  else if ([@"sendMessageAndSaveServer" isEqualToString:name]) {
-      NSString *text = args[@"message"] != [NSNull null] ? args[@"message"] : nil;
-      AgoraRtmMessage *message = [[AgoraRtmMessage new] initWithText:text];
-      AgoraRtmSendMessageOptions *options = [[AgoraRtmSendMessageOptions new] enableHistoricalMessaging:YES];
-      [channel sendMessage:message
-         sendMessageOption:options
-                completion:^(AgoraRtmSendChannelMessageErrorCode errorCode) {
-          result(@{@"errorCode": @(errorCode)});
-      }];
-  }
+else if ([@"sendMessageAndSaveServer" isEqualToString:name]) {
+  NSString *text = args[@"message"] != [NSNull null] ? args[@"message"] : nil;
+  AgoraRtmSendMessageOptions *sendMessageOption = [[AgoraRtmSendMessageOptions alloc] init];
+  sendMessageOption.enableHistoricalMessaging = true;
+  [channel sendMessage:message
+     sendMessageOption:options
+            completion:^(AgoraRtmSendChannelMessageErrorCode errorCode) {
+      result(@{@"errorCode": @(errorCode)});
+  }];
+}
   else if ([@"leave" isEqualToString:name]) {
     [channel leaveWithCompletion:^(AgoraRtmLeaveChannelErrorCode errorCode) {
       result(@{@"errorCode": @(errorCode)});
